@@ -2,46 +2,44 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="margin-20">
-        <h4>Add customer</h4>
+        <h4>Cadastro de Clientes</h4>
       </div>
       <form name="editForm" [formGroup]="editForm" novalidate (ngSubmit)="save(editForm)">
         <div class="form-group">
-          <label>Name</label>
-          <input type="text" class="form-control" formControlName="name">
-          <small *ngIf="!editForm.controls.name.valid" class="text-danger">
-            Name is required (minimum 5 characters).
+          <label>Nome do Cliente</label>
+          <input type="text" class="form-control" formControlName="nome">
+          <small *ngIf="!editForm.controls.nome.valid" class="text-danger">
+            Nome deve ter ao menos  5 caracteres.
           </small>
         </div>
-        <!--addresses-->
-        <div formArrayName="addresses">
-          <div *ngFor="let address of editForm.controls.addresses.controls; let i=index" class="panel panel-default">
+        <!--
+            Aqui vão os endereços
+            Observe que está sendo injetado aqui <jhi-endereco>
+            a variável umEndereco está sendo atribuída a isesimoEndereco
+            que é o parâmetro de entrada @Input para o componente endereco.component.ts  
+        -->
+        <div formArrayName="enderecos">
+          <div *ngFor="let umEndereco of editForm.controls.enderecos.controls; let i=index" class="panel panel-default">
             <div class="panel-heading">
-              <span>Address {{i + 1}}</span>
-              <span class="glyphicon glyphicon-remove pull-right" *ngIf="editForm.controls.addresses.controls.length > 1"
-                (click)="removeAddress(i)"></span>
+              <span>Endereço {{i + 1}}</span>
+              <span class="glyphicon glyphicon-remove pull-right"
+                *ngIf="editForm.controls.enderecos.controls.length > 1" (click)="removerEndereco(i)"></span>
             </div>
             <div class="panel-body" [formGroupName]="i">
-              <jhi-endereco [group]="editForm.controls.addresses.controls[i]"></jhi-endereco>
+              <jhi-endereco [iesimoEndereco]="umEndereco"></jhi-endereco>
             </div>
           </div>
         </div>
 
         <div class="margin-20">
-          <a (click)="addAddress()" style="cursor: default">
-            Add another address +
+          <a (click)="adicionarEndereco()" style="cursor: default">
+            Adicionar outro endereço +
           </a>
         </div>
 
         <div class="margin-20">
-          <button type="submit" class="btn btn-primary pull-right" [disabled]="!editForm.valid">Submit</button>
+          <button type="submit" class="btn btn-primary pull-right" [disabled]="!editForm.valid">Gravar</button>
         </div>
-        <!-- <div class="clearfix"></div>
-
-        <div class="margin-20">
-          <div>editForm details:-</div>
-          <pre>Is editForm valid?: <br>{{editForm.valid | json}}</pre>
-          <pre>form value: <br>{{editForm.value | json}}</pre>
-        </div> -->
       </form>
     </div>
   </div>

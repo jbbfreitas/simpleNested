@@ -7,26 +7,23 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 })
 @Injectable({ providedIn: 'root' })
 export class EnderecoComponent {
-    @Input('group')
+    @Input('iesimoEndereco')
     public enderecoForm: FormGroup;
 
-    initAddress(fb: FormBuilder) {
+
+    adicionarEndereco(editForm: FormGroup, fb: FormBuilder ) {
+        const enderecosArr = <FormArray>editForm.controls['enderecos'];
+        const endereco = this.iniciarEndereco(fb);
+        enderecosArr.push(endereco);
+    }
+
+    iniciarEndereco(fb: FormBuilder) {
         return fb.group({
-            street: ['', Validators.required],
-            postcode: ['']
+            rua: ['', Validators.required],
+            cep: [''],
+            telefone: ['', Validators.pattern('^[0-9]{2}.?[0-9]{5}-?[0-9]{4}$')]
         });
     }
 
-    addAddress(editForm: FormGroup, fb: FormBuilder ) {
-        const control = <FormArray>editForm.controls['addresses'];
-        const addrCtrl = this.initAddress(fb);
-        control.push(addrCtrl);
-
-        /* subscribe to individual address value changes */
-        // addrCtrl.valueChanges.subscribe(x => {
-        //   console.log(x);
-        // })
-    }
-  
 
 }

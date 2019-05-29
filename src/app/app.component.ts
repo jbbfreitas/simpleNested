@@ -11,34 +11,34 @@ import { EnderecoComponent } from './endereco.component';
 export class AppComponent implements OnInit {
   public editForm: FormGroup;
 
-  constructor(private fb: FormBuilder, public enderecoComponente: EnderecoComponent) { }
+  constructor(private fb: FormBuilder, public enderecoComponent: EnderecoComponent) { }
 
   ngOnInit() {
       this.editForm = this.fb.group({
-          name: ['', [Validators.required, Validators.minLength(5)]],
-          addresses: this.fb.array([])
+          nome: ['', [Validators.required, Validators.minLength(5)]],
+          enderecos: this.fb.array([])
       });
-      // add address
-      this.addAddress();
+      // adiciona um primeiro endereco
+      this.adicionarEndereco();
 
-      /* subscribe to addresses value changes */
-      // this.myForm.controls['addresses'].valueChanges.subscribe(x => {
-      //   console.log(x);
-      // })
+      /* subscribe para alterações nos valores dos enderecos */
+      this.editForm.controls['enderecos'].valueChanges.subscribe(x => {
+         console.log(x);
+       });
   }
 
 
-  removeAddress(i: number) {
-      const control = <FormArray>this.editForm.controls['addresses'];
-      control.removeAt(i);
+  removerEndereco(i: number) {
+      const enderecosArr = <FormArray>this.editForm.controls['enderecos'];
+      enderecosArr.removeAt(i);
   }
 
-  addAddress() {
-    this.enderecoComponente.addAddress(this.editForm, this.fb);
+  adicionarEndereco() {
+    this.enderecoComponent.adicionarEndereco(this.editForm, this.fb);
   }
 
   save(model: Customer) {
-      // call API to save
+      // chama a API para salvar
       // ...
       console.log(this.editForm);
   }
