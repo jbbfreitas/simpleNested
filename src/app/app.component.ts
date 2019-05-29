@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { Customer } from './customer.interface';
+import { Cliente } from './clienrte.interface';
 import { EnderecoComponent } from './endereco.component';
 
 @Component({
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
     this.enderecoComponent.adicionarEndereco(this.editForm, this.fb);
   }
 
-  save(model: Customer) {
+  save(model: Cliente) {
       // chama a API para salvar
       // ...
       console.log(this.editForm);
